@@ -6,16 +6,18 @@ defmodule PollerWeb.OptionController do
 
   action_fallback PollerWeb.FallbackController
 
-  def index(conn, _params) do
-    options = Polls.list_options()
-    render(conn, "index.json", options: options)
+  def index(conn, %{"poll_id" => poll_id}) do
+    poll = Polls.get_poll!(poll_id)
+    render(conn, "index.json", options: poll.options)
   end
 
-  def create(conn, %{"option" => option_params}) do
-    with {:ok, %Option{} = option} <- Polls.create_option(option_params) do
+  def create(conn, %{"poll_id" => poll_id, "option" => option_params}) do
+    poll = Polls.get_poll!(poll_id)
+
+    with {:ok, %Option{} = option} <- Polls.create_option(poll, option_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.option_path(conn, :show, option))
+      |> put_resp_header("location", Routes.poll_option_path(conn, :show, option))
       |> render("show.json", option: option)
     end
   end
