@@ -113,19 +113,6 @@ defmodule Poller.Polls do
   alias Poller.Polls.Option
 
   @doc """
-  Returns the list of options.
-
-  ## Examples
-
-      iex> list_options()
-      [%Option{}, ...]
-
-  """
-  def list_options do
-    Repo.all(Option)
-  end
-
-  @doc """
   Gets a single option.
 
   Raises `Ecto.NoResultsError` if the Option does not exist.
