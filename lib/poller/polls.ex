@@ -309,7 +309,7 @@ defmodule Poller.Polls do
   end
 
   defp option_query(id) do
-    from o in options_query()
+    from o in options_query(),
       where: o.id == ^id
   end
 
