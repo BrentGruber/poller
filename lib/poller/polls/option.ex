@@ -2,9 +2,11 @@ defmodule Poller.Polls.Option do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Poller.Polls.Poll
+
   schema "options" do
     field :value, :string
-    field :poll_id, :id
+    belongs_to(:poll, Poll)
 
     timestamps()
   end
@@ -14,5 +16,6 @@ defmodule Poller.Polls.Option do
     option
     |> cast(attrs, [:value])
     |> validate_required([:value])
+    |> assoc_constraint(:poll)
   end
 end
